@@ -4,9 +4,8 @@ import (
 	"k8s.io/apimachinery/pkg/conversion"
 	kapi "k8s.io/kubernetes/pkg/api"
 	kv1 "k8s.io/kubernetes/pkg/api/v1"
-
-	// we have a strong dependency on kube objects for deployments and scale
-	_ "k8s.io/kubernetes/pkg/api/install"
+	
+	_ "k8s.io/kubernetes/pkg/api/install" //使用了下划线的别名，意思是导入，但是不使用，但是包里面的代码会执行
 	_ "k8s.io/kubernetes/pkg/apis/apps/install"
 	_ "k8s.io/kubernetes/pkg/apis/authentication/install"
 	_ "k8s.io/kubernetes/pkg/apis/authorization/install"
@@ -17,8 +16,8 @@ import (
 	_ "k8s.io/kubernetes/pkg/apis/policy/install"
 	_ "k8s.io/kubernetes/pkg/apis/rbac/install"
 	_ "k8s.io/kubernetes/pkg/apis/settings/install"
-	_ "k8s.io/kubernetes/pkg/apis/storage/install"
-
+	_ "k8s.io/kubernetes/pkg/apis/storage/install"//各路的安装英雄
+        //下面的是openshift自己造的安装
 	_ "github.com/openshift/origin/pkg/authorization/api/install"
 	_ "github.com/openshift/origin/pkg/build/api/install"
 	_ "github.com/openshift/origin/pkg/cmd/server/api/install"
@@ -36,7 +35,7 @@ import (
 
 	metainternal "k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	watchapi "k8s.io/apimachinery/pkg/watch"
+	watchapi "k8s.io/apimachinery/pkg/watch"//为啥要watch？
 
 	authorizationapi "github.com/openshift/origin/pkg/authorization/api"
 	buildapi "github.com/openshift/origin/pkg/build/api"
@@ -59,6 +58,7 @@ import (
 	userv1 "github.com/openshift/origin/pkg/user/api/v1"
 )
 
+//这里只有包的初始化函数
 func init() {
 	// This is a "fast-path" that avoids reflection for common types. It focuses on the objects that are
 	// converted the most in the cluster.
