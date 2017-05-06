@@ -3,10 +3,10 @@ package v1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/runtime/schema"//runtime schema的工作机理
 )
 
-const GroupName = "build.openshift.io"
+const GroupName = "build.openshift.io"//定义常量把一组数据项group起来
 const LegacyGroupName = ""
 
 var (
