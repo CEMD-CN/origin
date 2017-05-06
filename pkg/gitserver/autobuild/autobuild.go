@@ -1,4 +1,4 @@
-package autobuild
+package autobuild //声明包名
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/errors"
-	restclient "k8s.io/client-go/rest"
+	restclient "k8s.io/client-go/rest" //api操作的client sdk
 	kclientcmd "k8s.io/client-go/tools/clientcmd"
 	kapi "k8s.io/kubernetes/pkg/api"
 
@@ -19,7 +19,7 @@ import (
 	"github.com/openshift/origin/pkg/gitserver"
 )
 
-type AutoLinkBuilds struct {
+type AutoLinkBuilds struct { //从构成中读出寓意
 	Namespaces []string
 	Builders   []kapi.ObjectReference
 	Client     client.BuildConfigsNamespacer
@@ -33,8 +33,8 @@ type AutoLinkBuilds struct {
 
 var ErrNotEnabled = fmt.Errorf("not enabled")
 
-func NewAutoLinkBuildsFromEnvironment() (*AutoLinkBuilds, error) {
-	config := &AutoLinkBuilds{}
+func NewAutoLinkBuildsFromEnvironment() (*AutoLinkBuilds, error) { //构建build结构体的方式之一：从环境中来
+	config := &AutoLinkBuilds{} //声明一个空的结构体，使用的{}操作符号
 
 	file := os.Getenv("AUTOLINK_KUBECONFIG")
 	if len(file) == 0 {
@@ -70,7 +70,7 @@ func NewAutoLinkBuildsFromEnvironment() (*AutoLinkBuilds, error) {
 
 	config.Namespaces = []string{namespace}
 	config.CurrentNamespace = namespace
-	return config, nil
+	return config, nil //从os包的environment对象中读取，这也是container启动是传递环境变量的价值所在
 }
 
 func clientFromConfig(path string) (*restclient.Config, string, error) {
@@ -92,7 +92,7 @@ func clientFromConfig(path string) (*restclient.Config, string, error) {
 		return nil, "", fmt.Errorf("the provided credentials %q could not be used: %v", path, err)
 	}
 	namespace, _, _ := cfg.Namespace()
-	return config, namespace, nil
+	return config, namespace, nil //使用client向kuberentes server索要namespace
 }
 
 func (a *AutoLinkBuilds) Link() (map[string]gitserver.Clone, error) {
@@ -195,7 +195,8 @@ func (a *AutoLinkBuilds) Link() (map[string]gitserver.Clone, error) {
 	if len(clones) == 0 {
 		log.Printf("No build configs found to link to the gitserver")
 	}
-	return clones, errors.NewAggregate(errs)
+	return clones, errors.NewAggregate(errs) 
+	//从namespace中获取的build config 与git server中的关系
 }
 
 func hasItem(items []*buildapi.BuildConfig, item kapi.ObjectReference) bool {
