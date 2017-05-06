@@ -10,22 +10,22 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
-	kapi "k8s.io/kubernetes/pkg/api"
+	kapi "k8s.io/kubernetes/pkg/api" //起一个别名
 
 	"github.com/openshift/origin/pkg/build/api"
 	"github.com/openshift/origin/pkg/build/api/v1"
 )
 
-const importPrefix = "github.com/openshift/origin/pkg/build/api"
+const importPrefix = "github.com/openshift/origin/pkg/build/api"//定义常量
 
-var accessor = meta.NewAccessor()
+var accessor = meta.NewAccessor()//创造一个accessor
 
 // availableVersions lists all known external versions for this group from most preferred to least preferred
 var availableVersions = []schema.GroupVersion{v1.LegacySchemeGroupVersion}
 
 func init() {
 	kapi.Registry.RegisterVersions(availableVersions)
-	externalVersions := []schema.GroupVersion{}
+	externalVersions := []schema.GroupVersion{}//创建一个数组类型的变量，数组集合里面没有元素；
 	for _, v := range availableVersions {
 		if kapi.Registry.IsAllowedVersion(v) {
 			externalVersions = append(externalVersions, v)
@@ -36,13 +36,13 @@ func init() {
 		return
 	}
 
-	if err := kapi.Registry.EnableVersions(externalVersions...); err != nil {
+	if err := kapi.Registry.EnableVersions(externalVersions...); err != nil { 
 		panic(err)
 	}
 	if err := enableVersions(externalVersions); err != nil {
 		panic(err)
 	}
-
+        //使用range做循环，打开指定版本
 	installApiGroup()
 }
 
