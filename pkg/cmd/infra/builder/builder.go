@@ -1,3 +1,5 @@
+//从cmd目录的执行转到各自的目录和包中去
+
 package builder
 
 import (
