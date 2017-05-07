@@ -1,3 +1,6 @@
+// 从cmd目录中倒入openshift的包
+// 执行openshift包中的函数
+// 错误处理，返回状态码退出
 package main
 
 import (
@@ -31,9 +34,9 @@ func main() {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 
-	basename := filepath.Base(os.Args[0])
+	basename := filepath.Base(os.Args[0]) //获得当前文件的base name
 	command := openshift.CommandFor(basename)
-	if err := command.Execute(); err != nil {
+	if err := command.Execute(); err != nil {//执行execute函数
 		os.Exit(1)
 	}
 }
