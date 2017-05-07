@@ -1,3 +1,4 @@
+//作为一个大的集合，担当聚合的作用
 package openshift
 
 import (
