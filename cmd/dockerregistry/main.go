@@ -1,3 +1,4 @@
+//根据配置，启动docker registry server
 package main
 
 import (
